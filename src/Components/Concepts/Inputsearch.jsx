@@ -1,5 +1,6 @@
 import {   useEffect, useState } from "react";
 import TextField from "@mui/material/TextField";
+import { Stack } from "@mui/material";
 
 function Search() {
 
@@ -20,7 +21,6 @@ function Search() {
             return;
         }
             console.log("api data",result);
-            
             const data = await fetch(`https://dummyjson.com/recipes/search?q=${search}`);
             const json = await data.json();
             setResults(json.recipes || []);
@@ -32,7 +32,7 @@ function Search() {
     };
 
     useEffect(() => {
-        const timer = setTimeout(fetchData,300) //for 3 missiseconds gap it will call api not infinite loop
+        const timer = setTimeout(fetchData,300) //for 3 milliseconds gap it will call api not infinite loop
         return () => { 
             clearTimeout(timer)  // need to clear the time time 
         }
@@ -40,7 +40,7 @@ function Search() {
 
     return (
         <>
-            <div >
+            <Stack sx={{width:500,display:"flex",justifyContent:'center'}}>
                 <TextField
                     label="Search Box"
                     value={search}
@@ -48,7 +48,6 @@ function Search() {
                     margin="dense"
                     fullWidth
                 />
-            </div>
             <div>
                 {result.map((r) => (
                     <span key={r.id} style={{ marginBottom: "6px" }}>
@@ -56,6 +55,7 @@ function Search() {
                     </span>
                 ))}
             </div>
+         </Stack>
 
         </>
     );
